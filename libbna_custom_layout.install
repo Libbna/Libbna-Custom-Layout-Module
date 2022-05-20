@@ -1,0 +1,73 @@
+<?php
+
+use Drupal\field\Entity\FieldConfig;
+use Drupal\layout_builder\Entity\LayoutBuilderEntityViewDisplay;
+use Drupal\layout_builder\Section;
+use Drupal\layout_builder\SectionComponent;
+
+function libbna_custom_layout_install()
+{
+  $articleDefaultLayout = LayoutBuilderEntityViewDisplay::load(
+    'node.article.default'
+  );
+  $articleDefaultLayout->setThirdPartySetting('layout_builder', 'enabled', TRUE);
+  $articleDefaultLayout->unsetThirdPartySetting('layout_builder', 'allow_custom');
+
+
+
+
+  $section = new Section('layout_oneplusfourgrid_section');
+  $uuid =$articleDefaultLayout->uuid();
+  $config = [
+    'id' => 'field_block:node:article:field_image',
+    'label_display' => '0',
+    'context_mapping' => [
+      'entity' => 'layout_builder.entity',
+    ],
+    'formatter' => [
+      'type' => 'image',
+      'label' => 'hidden',
+      'settings' => [
+        'image_link' => '',
+        'image_style' => 'large',
+        'svg_attributes' => [
+          'width' => null,
+          'height' => null,
+        ],
+        'svg_render_as_image' => true,
+      ],
+      'third_party_settings' => [],
+    ],
+  ];
+
+  $component = new SectionComponent(
+    $uuid,
+    'content',
+    $config
+  );
+
+  $section->appendComponent($component);
+
+  $sections[] = $section;
+  $articleDefaultLayout->setThirdPartySetting('layout_builder', 'sections', $sections);
+
+  $articleDefaultLayout->removeComponent('body');
+
+  $articleDefaultLayout->save();
+
+}
+
+function libbna_custom_layout_uninstall()
+{
+  $articleDefaultLayout = LayoutBuilderEntityViewDisplay::load(
+    'node.article.default'
+  );
+  $articleDefaultLayout->setThirdPartySetting('layout_builder', 'enabled', FALSE);
+  $articleDefaultLayout->unsetThirdPartySetting('layout_builder', 'sections');
+  $articleDefaultLayout->setThirdPartySetting('layout_builder', 'allow_custom', FALSE);
+
+  $articleDefaultLayout->setComponent('body');
+
+  $articleDefaultLayout->save();
+  
+}

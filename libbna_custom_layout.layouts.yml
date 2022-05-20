@@ -1,0 +1,26 @@
+layout_oneplusfourgrid_section:
+  label: "Custom One plus four grid"
+  path: layouts/oneplusfourgrid_section
+  template: layout--oneplusfourgrid-section
+  library: libbna_custom_layout/oneplusfourgrid_section
+  category: "Custom grid"
+  default_region: first
+  icon_map:
+    - [header_left, header_left, header_right]
+    - [content, content, sidebar]
+    - [content, content, sidebar]
+    - [content, content, sidebar]
+    - [footer_left, footer_right]
+  regions:
+    header_left:
+      label: Header Left
+    header_right:
+      label: Header Right
+    sidebar:
+      label: Sidebar
+    content:
+      label: Content
+    footer_left:
+      label: Footer Left
+    footer_right:
+      label: Footer Right

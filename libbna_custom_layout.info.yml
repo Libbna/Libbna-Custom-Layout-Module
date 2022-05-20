@@ -1,0 +1,8 @@
+name: Libbna Custom Layout Builder
+type: module
+description: Custom Layout Module.
+package: QED42
+core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal:layout_builder
+  - config_rewrite
